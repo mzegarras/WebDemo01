@@ -3,6 +3,27 @@ pipeline {
     agent none
 
     stages {
+
+
+
+        stage('Check'){
+            agent {
+                //docker { image 'node:latest' }
+                docker { image 'mzegarra/ngbuilder:latest' }
+                
+            }
+
+            steps {
+            sh 'npm run-script --silent -- ng lint --format=checkstyle >checkstyle-result.xml'
+            }
+            post {
+            always {
+                recordIssues tool: tsLint(pattern: 'checkstyle-result.xml'),
+                            enableForFailure: true
+            }
+}
+
+        }
         stage('Build') {
              agent {
                 //docker { image 'node:latest' }
@@ -31,7 +52,7 @@ pipeline {
              environment {
                             DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
                         }
-                        
+
             steps {
 
                 script {

@@ -47,7 +47,6 @@ pipeline {
                               target: 'data';
 
                 unzip zipFile: 'dist.zip', dir: 'data/dis'
-                sh 'ls -lta ./data/dis/demo-web'
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
             }

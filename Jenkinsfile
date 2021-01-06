@@ -18,7 +18,7 @@ pipeline {
 
             post{
                 success {
-                    sh 'ls -lta'
+                    
                     zip zipFile: 'dist.zip', archive: true, dir: 'dist/', overwrite: true
                     archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
                     
@@ -46,8 +46,8 @@ pipeline {
                               selector: specific('${BUILD_NUMBER}'),
                               target: 'data';
 
-                unzip zipFile: 'dist.zip', dir: 'data'
-
+                unzip zipFile: 'dist.zip', dir: 'data/dis'
+                sh 'ls -lta ./data/dis'
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
             }

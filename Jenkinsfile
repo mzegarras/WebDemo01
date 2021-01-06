@@ -18,7 +18,7 @@ pipeline {
 
             post{
                 success {
-                    archiveArtifacts artifacts: './dist', fingerprint: true, onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'dist/', fingerprint: true, onlyIfSuccessful: true
                 }
             }
         }

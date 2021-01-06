@@ -1,13 +1,14 @@
 
 pipeline {
-    agent {
-        //docker { image 'node:latest' }
-        docker { image 'mzegarra/ngbuilder:latest' }
-        
-    }
+    agent none
 
     stages {
         stage('Build') {
+             agent {
+                //docker { image 'node:latest' }
+                docker { image 'mzegarra/ngbuilder:latest' }
+                
+            }
             steps {
                 sh '''
                     npm install
@@ -17,9 +18,33 @@ pipeline {
 
             post{
                 success {
-                    zip zipFile: 'dist.zip', archive: false, dir: 'dist'
-                    archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'dist', fingerprint: true, onlyIfSuccessful: true
                 }
+            }
+        }
+
+        stage('Docker Build') {
+            agent any
+            steps {
+
+                script {
+                  def props = readProperties file: 'config/dev.env'
+                  env.APP = props.APP
+                  env.APP_MODULE = props.APP_MODULE
+                  env.DOCKER_REPOSITORY= props.DOCKER_REPOSITORY
+                }
+
+                sh 'echo  $DOCKER_REPOSITORY/$APP-$APP_MODULE'
+
+                copyArtifacts filter: 'dist',
+                              fingerprintArtifacts: true,
+                              projectName: '${JOB_NAME}',
+                              flatten: true,
+                              selector: specific('${BUILD_NUMBER}'),
+                              target: 'data';
+
+                sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
+                sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
             }
         }
     }

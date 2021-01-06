@@ -50,6 +50,10 @@ pipeline {
                 unzip zipFile: 'dist.zip', dir: 'data/dist'
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
+                sh 'docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}'
+                sh 'docker push $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}'
+                sh 'docker push $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest'
+                sh 'docker logout'
             }
         }
     }

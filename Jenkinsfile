@@ -1,13 +1,14 @@
 
 pipeline {
     agent {
-        docker { image 'node:latest' }
+        //docker { image 'node:latest' }
+        docker { image 'mzegarra/ngbuilder:latest' }
+        
     }
 
     stages {
         stage('Verify') {
             steps {
-                sh 'npm install -g @angular/cli && npm cache clean'
                 sh 'npm run build --prod'
             }
         }

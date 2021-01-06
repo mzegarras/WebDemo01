@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  angular:
+    build:
+      context: .
+    image: mzegarra/ngbuilder
+    ports:
+      - 4200:4200

@@ -20,12 +20,12 @@ pipeline {
                 success {
                     sh 'ls -lta'
                     zip zipFile: 'dist.zip', archive: false, dir: 'dist'
-                    archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
+                    //archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
                     
                 }
             }
         }
-
+        /* 
         stage('Docker Build') {
             agent any
             steps {
@@ -51,6 +51,6 @@ pipeline {
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
             }
-        }
+        }*/
     }
 }

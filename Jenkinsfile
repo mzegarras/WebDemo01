@@ -18,8 +18,7 @@ pipeline {
             }
             post {
             always {
-                recordIssues tool: tsLint(pattern: 'checkstyle-result.xml'),
-                            enableForFailure: true
+                recordIssues tool: tsLint(pattern: 'checkstyle-result.xml'), enableForFailure: true
             }
 }
 

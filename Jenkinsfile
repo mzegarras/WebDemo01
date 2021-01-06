@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Verify') {
             steps {
-                sh 'RUN npm run build --prod'
+                sh 'npm run build --prod'
             }
         }
     }

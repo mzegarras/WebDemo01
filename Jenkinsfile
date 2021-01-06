@@ -17,7 +17,8 @@ pipeline {
 
             post{
                 success {
-                    archiveArtifacts artifacts: 'dist/', fingerprint: true, onlyIfSuccessful: true
+                    zip zipFile: 'dist.zip', archive: false, dir: 'dist'
+                    archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
                 }
             }
         }

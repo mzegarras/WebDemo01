@@ -18,8 +18,10 @@ pipeline {
 
             post{
                 success {
+                    sh 'ls -lta'
                     zip zipFile: 'dist.zip', archive: false, dir: 'dist'
                     archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
+                    
                 }
             }
         }

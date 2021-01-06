@@ -28,6 +28,10 @@ pipeline {
         
         stage('Docker Build') {
             agent any
+             environment {
+                            DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
+                        }
+                        
             steps {
 
                 script {

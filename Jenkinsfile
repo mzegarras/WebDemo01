@@ -18,7 +18,8 @@ pipeline {
 
             post{
                 success {
-                    archiveArtifacts artifacts: 'dist/', fingerprint: true, onlyIfSuccessful: true
+                    zip zipFile: 'dist.zip', archive: false, dir: 'dist'
+                    archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
                 }
             }
         }
@@ -36,12 +37,14 @@ pipeline {
 
                 sh 'echo  $DOCKER_REPOSITORY/$APP-$APP_MODULE'
 
-                copyArtifacts filter: 'dist',
+                copyArtifacts filter: 'dist.zip',
                               fingerprintArtifacts: true,
                               projectName: '${JOB_NAME}',
                               flatten: true,
                               selector: specific('${BUILD_NUMBER}'),
                               target: 'data';
+
+                unzip zipFile: 'dist.zip', dir: 'dist'
 
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"

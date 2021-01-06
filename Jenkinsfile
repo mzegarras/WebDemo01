@@ -9,7 +9,11 @@ pipeline {
     stages {
         stage('Verify') {
             steps {
-                sh 'npm run build --prod'
+                sh '''
+                    pwd
+                    ls -lta pwd
+                    npm run build --prod
+                    '''
             }
         }
     }

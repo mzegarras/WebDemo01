@@ -46,7 +46,7 @@ pipeline {
                               selector: specific('${BUILD_NUMBER}'),
                               target: 'data';
 
-                unzip zipFile: 'dist.zip', dir: 'dist'
+                unzip zipFile: 'dist.zip', dir: 'data'
 
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"

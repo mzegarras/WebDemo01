@@ -20,7 +20,7 @@ pipeline {
                 success {
                     sh 'ls -lta'
                     //zip zipFile: 'data/dist.zip', archive: true, dir: 'dist', overwrite: true
-                    archiveArtifacts artifacts: 'dist', fingerprint: true, onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'dist/', fingerprint: true, onlyIfSuccessful: true
                     
                 }
             }

@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        /* 
+        
         stage('Docker Build') {
             agent any
             steps {
@@ -51,6 +51,6 @@ pipeline {
                 sh "docker build --file ./data/Dockerfile --tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER} ."
                 sh "docker tag $DOCKER_REPOSITORY/$APP-$APP_MODULE:${BUILD_NUMBER}  $DOCKER_REPOSITORY/$APP-$APP_MODULE:latest"
             }
-        }*/
+        }
     }
 }

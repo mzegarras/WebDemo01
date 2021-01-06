@@ -10,8 +10,9 @@ pipeline {
         stage('Verify') {
             steps {
                 sh '''
-                    pwd
-                    ls -lta pwd
+                    echo $pwd
+                    ls -lta $pwd
+                    ls -lta
                     npm run build --prod
                     '''
             }

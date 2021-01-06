@@ -19,7 +19,7 @@ pipeline {
             post{
                 success {
                     sh 'ls -lta'
-                    zip zipFile: 'dist.zip', archive: false, dir: 'dist'
+                    zip zipFile: 'data/dist.zip', archive: true, dir: 'dist', overwrite: true
                     //archiveArtifacts artifacts: 'dist.zip', fingerprint: true, onlyIfSuccessful: true
                     
                 }

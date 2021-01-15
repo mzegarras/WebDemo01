@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: "mzegarra/websimple:3.0.0"
+    image: "mzegarra/websimple:2.0.0"
     build:
       context: .
       dockerfile: ./data/Dockerfile
